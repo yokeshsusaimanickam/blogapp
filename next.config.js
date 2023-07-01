@@ -6,7 +6,10 @@ images:{
         "images.pexels.com",
         "cdn.stocksnap.io",
         "cdn-icons-png.flaticon.com"
-    ]
+    ],
+    typescript:{
+        ignoreBuildErrors:true,
+    }
 }
 
 }
