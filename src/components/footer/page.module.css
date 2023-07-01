@@ -1,0 +1,20 @@
+.container{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.copyrights{
+    margin-top: 5px;
+    font-size: large;
+    color: antiquewhite;
+}
+.footer_images{
+    gap: 20px;
+    display: flex;
+    align-items: center;
+}
+.icons{
+    opacity: 0.6;
+    cursor: pointer;
+}
