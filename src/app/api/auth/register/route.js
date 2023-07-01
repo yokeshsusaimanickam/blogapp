@@ -1,31 +1,29 @@
-import { NextResponse } from "next/server";
+import User from "../../../../models/User.js";
 import connect from "../../../../utils/db.js";
-import Post from "../../../../models/Post.js";
+const  bcrypt=require("bcryptjs");
+import { NextResponse } from "next/server";
 
-export const GET = async (request, { params }) => {
-  const { id } = params;
+export const POST = async (request) => {
+  const { name, email, password } = await request.json();
 
-  try {
-    await connect();
+  await connect();
 
-    const post = await Post.findById(id);
+  const hashedPassword = await bcrypt.hash(password, 5);
 
-    return new NextResponse(JSON.stringify(post), { status: 200 });
-  } catch (err) {
-    return new NextResponse("Database Error", { status: 500 });
-  }
-};
-
-export const DELETE = async (request, { params }) => {
-  const { id } = params;
+  const newUser = new User({
+    name,
+    email,
+    password: hashedPassword,
+  });
 
   try {
-    await connect();
-
-    await Post.findByIdAndDelete(id);
-
-    return new NextResponse("Post has been deleted", { status: 200 });
+    await newUser.save();
+    return new NextResponse("User has been created", {
+      status: 201,
+    });
   } catch (err) {
-    return new NextResponse("Database Error", { status: 500 });
+    return new NextResponse(err.message, {
+      status: 500,
+    });
   }
 };
